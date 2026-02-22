@@ -7,7 +7,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+
+      - name: Cache Dependencies
+        id: cache-step
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/cache-directory
+          key: cache-d59da1c
+
+      - name: prime-cache-d59da1c
+        run: |
+          echo "Cache hit: ${{ steps.cache-step.outputs.cache-hit }}"
+          # Create a dummy file so the cache is not empty
+          mkdir -p ~/cache-directory
+          echo "priming-data" > ~/cache-directory/data.txt
 
       - name: 24f2006360@ds.study.iitm.ac.in
         run: echo "Verification Complete"
