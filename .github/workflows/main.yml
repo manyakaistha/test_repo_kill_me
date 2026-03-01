@@ -1,0 +1,15 @@
+name: CI Badge Workflow
+
+# This tells the robot WHEN to wake up
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch: # This creates the manual "Run" button!
+
+# This tells the robot WHAT to do
+jobs:
+  pass-inspection:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say Hello
+        run: echo "I am a robot and my test passed automatically!"
