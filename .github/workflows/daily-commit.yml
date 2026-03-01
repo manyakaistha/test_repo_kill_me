@@ -1,24 +1,33 @@
-name: Daily DevSync Update
+# Added the email to the workflow name
+name: Daily Automated Commit 24f2006360@ds.study.iitm.ac.in
+
+# Added a run-name to explicitly name the execution
+run-name: Daily Run for 24f2006360@ds.study.iitm.ac.in
 
 on:
   schedule:
-    # This runs at 00:00 (Midnight) UTC every day
-    - cron: '0 0 * * *'
-  workflow_dispatch: # This allows you to run it manually for testing!
+    - cron: '30 14 * * *'
+  workflow_dispatch:
 
 jobs:
-  automated-commit:
+  auto-commit:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
-      - name: Checkout repository
+      - name: Checkout the repository
         uses: actions/checkout@v4
 
-      # Requirement: Step with your specific email in the name
-      - name: Task for 24f2006360@ds.study.iitm.ac.in
+      # Kept the email in the step name as originally requested
+      - name: Update log for 24f2006360@ds.study.iitm.ac.in
         run: |
-          date >> daily_log.txt
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add daily_log.txt
-          git commit -m "Automated daily update $(date)"
+          echo "Automated daily run completed on $(date)" >> devsync_log.txt
+
+      - name: Save and push the commit
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add devsync_log.txt
+          git commit -m "Automated daily commit"
           git push
